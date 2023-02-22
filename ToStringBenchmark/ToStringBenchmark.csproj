@@ -2,9 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net472;net48;net5.0;net5.0-windows;net6.0;net6.0-windows;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net472;net48;net5.0;net5.0-windows;net6.0;net6.0-windows;netcoreapp3.1;net7.0</TargetFrameworks>
     <LangVersion>default</LangVersion>
     <Nullable>warnings</Nullable>
+    <StartupObject>ToStringBenchmark.Program</StartupObject>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <AnalysisLevel>latest-all</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
   </ItemGroup>
 
 </Project>

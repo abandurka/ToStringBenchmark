@@ -6,45 +6,23 @@ using BenchmarkDotNet.Jobs;
 
 namespace ToStringBenchmark
 {
-    public class FooBoxing
+    public static class Program
     {
-        public int Value { get; }
-
-        public FooBoxing(int value)
+        public static void Main()
         {
-            Value = value;
-        }
-
-        public override string ToString()
-        {
-            return $"{{{nameof(Value)}={Value}}}";
+            BenchmarkRunner.Run<ToStringBenchmarkJob>();
         }
     }
 
-    public class FooNoBoxing
-    {
-        public int Value { get; }
-
-        public FooNoBoxing(int value)
-        {
-            Value = value;
-        }
-
-        public override string ToString()
-        {
-            return $"{{{nameof(Value)}={Value.ToString()}}}";
-        }
-    }
-
-    [RankColumn]
+    [RankColumn(BenchmarkDotNet.Mathematics.NumeralSystem.Stars)]
     [ShortRunJob(RuntimeMoniker.Net47)]
     [ShortRunJob(RuntimeMoniker.Net50)]
     [ShortRunJob(RuntimeMoniker.Net60)]
+    [ShortRunJob(RuntimeMoniker.Net70)]
     [ShortRunJob(RuntimeMoniker.NetCoreApp31)]
     [MemoryDiagnoser]
-    [MarkdownExporter]
     [MarkdownExporterAttribute.GitHub]
-    public class ToStringBenchmark
+    public class ToStringBenchmarkJob
     {
         private readonly List<FooBoxing> _fooBoxingList = new();
         private readonly List<FooNoBoxing> _fooNoBoxingList = new();
@@ -52,7 +30,7 @@ namespace ToStringBenchmark
         [Params(100)]
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnassignedField.Global
-        public int N;
+        public int N { get; set; }
         
         [GlobalSetup]
         public void Setup()
@@ -73,13 +51,38 @@ namespace ToStringBenchmark
 
         [Benchmark]
         public void ToStringWithoutBoxing() => _fooNoBoxingList.ForEach(p => p.ToString());
-    }
 
-    public static class Program
-    {
-        public static void Main(string[] args)
+        private class FooBoxing
         {
-            var summary = BenchmarkRunner.Run<ToStringBenchmark>();
+            public int Value { get; }
+
+            public FooBoxing(int value)
+            {
+                Value = value;
+            }
+
+            public override string ToString()
+            {
+                return $"{{{nameof(Value)}={Value}}}";
+            }
+        }
+
+        private class FooNoBoxing
+        {
+            public int Value { get; }
+
+            public FooNoBoxing(int value)
+            {
+                Value = value;
+            }
+
+            public override string ToString()
+            {
+#pragma warning disable CA1305 // Specify IFormatProvider
+                return $"{{{nameof(Value)}={Value.ToString()}}}";
+#pragma warning restore CA1305 // Specify IFormatProvider
+            }
         }
     }
+
 }
