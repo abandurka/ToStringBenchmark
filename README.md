@@ -3,4 +3,6 @@ Benchmark for ToString method
 
 To run the benchmark
 
-dotnet run -c Release --framework netcoreapp2.2
+```powershell
+dotnet run -c Release --framework net7.0
+```

@@ -7,7 +7,6 @@
     <Nullable>warnings</Nullable>
     <StartupObject>ToStringBenchmark.Program</StartupObject>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest-all</AnalysisLevel>
   </PropertyGroup>

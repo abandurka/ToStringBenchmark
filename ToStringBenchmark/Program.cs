@@ -52,7 +52,7 @@ namespace ToStringBenchmark
         [Benchmark]
         public void ToStringWithoutBoxing() => _fooNoBoxingList.ForEach(p => p.ToString());
 
-        private class FooBoxing
+        private sealed class FooBoxing
         {
             public int Value { get; }
 
@@ -67,7 +67,7 @@ namespace ToStringBenchmark
             }
         }
 
-        private class FooNoBoxing
+        private sealed class FooNoBoxing
         {
             public int Value { get; }
 
